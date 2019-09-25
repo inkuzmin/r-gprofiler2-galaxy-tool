@@ -16,33 +16,52 @@ parser$add_argument("--input", type="character", action="append")
 parser$add_argument("--label", type="character", action="append")
 parser$add_argument("--output", type="character")
 
-parser$add_argument("--multiquery", action='store_true')
+# parser$add_argument("--multiquery", action='store_true')
+
 parser$add_argument("-p", "--plot", type="character")
+
+# Advanced
+parser$add_argument("--organism", type="character")
+parser$add_argument("--ordered_query", action="store_true")
+parser$add_argument("--significant", action="store_true")
+parser$add_argument("--exclude_iea", action="store_true")
+parser$add_argument("--measure_underrepresentation", action="store_true")
+parser$add_argument("--evcodes", action="store_true")
+parser$add_argument("--user_threshold", type="double")
+parser$add_argument("--correction_method", type="character")
+parser$add_argument("--domain_scope", type="character")
+parser$add_argument("--custom_bg", type="character")
+parser$add_argument("--numeric_ns", type="character")
+parser$add_argument("--sources", type="character", action="append")
 
 args <- parser$parse_args()
 
-fileName = args$input
+query <- scan(args$input, character(), quote = "")
 
-if (length(fileName) > 1) {
-  i <- 1
-  j <- 1
-  query <- list()
-  for (input in fileName) {
-    q <- scan(input, character(), quote = "")
-    l <- args$label[i]
-    while (!is.null(query[[l]])) {
-      l <- paste(l, j)
-      j <- j + 1
-    }
-    query[[l]] <- q
-    i <- i + 1
-  }
+if (args$custom_bg != 'None') {
+	custom_bg <- scan(args$custom_bg, character(), quote = "")
 } else {
-  query <- list()
-  query[[args$label]] <- scan(fileName, character(), quote = "")
+	custom_bg = NULL
 }
 
-response <- gost(query)
+if (length(args$sources) > 0) {
+	sources <- unlist(strsplit(args$sources, ","))
+}
+
+response <- gost(query
+	, organism = args$organism
+	, ordered_query = args$ordered_query
+	, significant = args$significant
+	, exclude_iea = args$exclude_iea
+	, measure_underrepresentation = args$measure_underrepresentation
+	, evcodes = args$evcodes
+	, user_threshold = args$user_threshold
+	, correction_method = args$correction_method
+	, domain_scope = args$domain_scope
+	, custom_bg = custom_bg
+	, numeric_ns = args$numeric_ns
+	, sources = sources
+	)
 
 output <- response$result
 
@@ -54,14 +73,12 @@ write.table(output, file=args$output, quote=FALSE, sep='\t', row.names = FALSE, 
 
 
 
+if (args$plot != 'None') {
+	image.name <- strsplit(args$plot, "\\.")
+	plot <- gostplot(response, interactive = FALSE)
+	ggsave(plot, filename = paste0(unlist(image.name)[1], ".png"))
 
-image.name <- strsplit(args$plot, "\\.")
-
-plot <- gostplot(response, interactive = FALSE)
-
-ggsave(plot, filename = paste0(unlist(image.name)[1], ".png"))
-
-# publish_gostplot(plot, highlight_terms = NULL, filename = paste0(unlist(image.name)[1], ".png"))
-
-file.rename(paste0(unlist(image.name)[1], ".png"), paste0(unlist(image.name)[1], ".dat"))
+	# publish_gostplot(plot, highlight_terms = NULL, filename = paste0(unlist(image.name)[1], ".png"))
+	file.rename(paste0(unlist(image.name)[1], ".png"), paste0(unlist(image.name)[1], ".dat"))
+}
 
