@@ -24,10 +24,10 @@
             --custom_bg "$advanced_options.custom_bg"
             --numeric_ns "$advanced_options.numeric_ns"
             
-            --sources "${",".join(sum([data_sources[source_category] for source_category in data_sources if data_sources[source_category] and len(data_sources[source_category]) > 0], []))}"
+            --sources "${",".join(map(str, sum([list($data_sources[source_category] or []) for source_category in $data_sources], [])))}"
 
-            --output $output
-            --plot $plot
+            --output "$output"
+            --plot "$plot"
     ]]></command>
     <inputs>
 
