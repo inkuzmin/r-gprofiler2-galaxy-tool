@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<tool id="gprofiler2_snpense" name="g:Profiler / g:SNPense" version="0.1.6">
+    <description>maps SNP rs-codes to gene names, chromosomal coordinates and variant effects</description>
+    <requirements>
+        <requirement type="package" version="3.5.3">r-base</requirement>
+        <requirement type="package" version="0.1.6">r-gprofiler2</requirement>
+        <requirement type="package" version="2.0.1">r-argparse</requirement>
+        <requirement type="package" version="1.8.4">r-plyr</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript "$__tool_directory__/gprofiler2_snpense.R"
+            --input "$input"
+            $filter_na
+            --output "$output"
+    ]]></command>
+    <inputs>
+        <param type="data" name="input" format="txt"
+            label="Input is whitespace-separated list of SNP IDs to be translated (should start with prefix ’rs’)." />
+
+        <param type="boolean" name="filter_na" label="Filter N/A"
+            optional="true"
+            help="Whether to filter out results without a corresponding target name."
+            checked="false"
+            truevalue="--filter_na" falsevalue="" />
+
+    </inputs>
+    <outputs>
+         <data label="${tool.name} on ${on_string}"
+            name="output" format="tabular" />
+    </outputs>
+
+    <help>
+**What it does**
+  Interface to the g:Profiler tool g:SNPense that maps SNP rs identifiers to chromosome positions, genes and variant effects. Available only for human SNPs.
+
+----
+
+**Useful links**
+  * https://biit.cs.ut.ee/gprofiler/snpense — a standalone tool with expanded  functionality.
+
+----
+
+**gprofiler2 R tool**
+  * https://CRAN.R-project.org/package=gprofiler2 — as CRAN package. 
+  * https://anaconda.org/conda-forge/r-gprofiler2 — as conda-forge package.
+</help>
+    <citations>
+        <citation type="doi">doi:10.1093/nar/gkz369</citation>
+    </citations>
+</tool>

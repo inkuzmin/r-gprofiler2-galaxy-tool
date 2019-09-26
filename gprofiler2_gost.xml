@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<tool id="gprofiler2_gost" name="g:Profiler / g:GOSt" version="0.1.0">
-    <description>functional enrichment analysis of gene lists</description>
+<tool id="gprofiler2_gost" name="g:Profiler / g:GOSt" version="0.1.6">
+    <description>performs functional enrichment analysis of gene lists</description>
     <requirements>
         <requirement type="package" version="3.5.3">r-base</requirement>
         <requirement type="package" version="0.1.6">r-gprofiler2</requirement>
@@ -35,7 +35,6 @@
             label="Input is whitespace-separated list of genes" />
 
         <param type="text" name="organism" label="Organism"
-
             help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs."
             value="hsapiens">
         </param>
@@ -53,7 +52,8 @@
                 checked="true"
                 truevalue="--significant" falsevalue="" />
 
-            <param type="boolean" name="measure_underrepresentation" label="Measure underrepresentation"
+            <param type="boolean" name="measure_underrepresentation"
+                label="Measure underrepresentation"
                 optional="true"
                 truevalue="--measure_underrepresentation" falsevalue="" />
 
@@ -69,7 +69,8 @@
                 help="Custom p-value threshold, results with a larger p-value are excluded."
                 value="0.05" />
 
-            <param name="correction_method" type="select" label="Significane threshold" multiple="false"
+            <param name="correction_method" type="select" label="Significane threshold"
+                multiple="false"
                 optional="true"
                 help="The algorithm used for multiple testing correction">
                 <option selected="true" value="gSCS">g:SCS threshold</option>
@@ -77,7 +78,8 @@
                 <option value="fdr">Benjamini-Hochberg FDR</option>
             </param>
 
-            <param name="domain_scope" type="select" label="Statistical domain scope" multiple="false"
+            <param name="domain_scope" type="select" label="Statistical domain scope"
+                multiple="false"
                 optional="true"
                 help="Effective genomic landscape for statistical testing.">
                 <option selected="true" value="annotated">Only annotated genes</option>
@@ -85,12 +87,13 @@
                 <option value="custom">Custom</option>
             </param>
 
-            <param type="data" optional="true" name="custom_bg" format="tabular" label="Custom background" />
+            <param type="data" optional="true" name="custom_bg" format="tabular"
+                label="Custom background" />
 
             <param type="text" name="numeric_ns" label="Numeric IDs treated as"
-            optional="true"
-            help="The prefix for fully numeric IDs. Check the help section below for the complete list of supported namespaces."
-            value="" />
+                optional="true"
+                help="The prefix for fully numeric IDs. Check the help section below for the complete list of supported namespaces."
+                value="" />
 
         </section>
 
@@ -107,7 +110,10 @@
                 help="Exclude electronic GO annotations (IEA evidence code)."
                 truevalue="--exclude_iea" falsevalue=""  />
 
-            <param name="bp_sources" optional="true" type="select" label="biological pathways" multiple="true" display="checkboxes">
+            <param name="bp_sources" optional="true" type="select"
+                label="biological pathways"
+                multiple="true"
+                display="checkboxes">
                 <option selected="true" value="KEGG">KEGG</option>
                 <option selected="true" value="REAC">Reactome</option>
                 <option selected="true" value="WP">WikiPathways</option>
@@ -138,10 +144,10 @@
 
     </inputs>
     <outputs>
-         <data label="${tool.name} on ${on_string}: table"
+         <data label="${tool.name} on ${on_string}"
             name="output" format="tabular" />
 
-         <data label="${tool.name} on ${on_string}: image"
+         <data label="${tool.name} on ${on_string} (plot)"
             name="plot" format="png">
             <filter>advanced_exporting['plot_options']['export_plot']</filter>
         </data>
@@ -154,7 +160,7 @@
 ----
 
 **Useful links**
-  * https://biit.cs.ut.ee/gprofiler/ — a standalone tool with expanded exploratory functionality.
+  * https://biit.cs.ut.ee/gprofiler/gost — a standalone tool with expanded functionality.
   * https://biit.cs.ut.ee/gprofiler/page/organism-list — a list of suppоrted organism IDs.
   * https://biit.cs.ut.ee/gprofiler/page/namespaces-list — a list of supported namespace IDs.
 

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<tool id="gprofiler2_random" name="g:Profiler / random" version="0.1.6">
+    <description>generates a gene list</description>
+    <requirements>
+        <requirement type="package" version="3.5.3">r-base</requirement>
+        <requirement type="package" version="1.95_4.12">r-rcurl</requirement>
+        <requirement type="package" version="2.0.1">r-argparse</requirement>
+        <requirement type="package" version="1.6">r-jsonlite</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript "$__tool_directory__/gprofiler2_random.R"
+            --output "$output" --organism "$organism"
+    ]]></command>
+    <inputs>
+        <param type="text" name="organism" label="Organism"
+            help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs."
+            value="hsapiens">
+        </param>
+    </inputs>
+    <outputs>
+         <data label="${tool.name}"
+            name="output" format="tabular" />
+    </outputs>
+
+    <help>
+**What it does**
+  This tool wraps performs a request to g:Profiler API to generate pseudorandom...
+
+----
+
+**Useful links**
+  * https://biit.cs.ut.ee/gprofiler/ — a standalone tool with expanded exploratory functionality.
+  * https://biit.cs.ut.ee/gprofiler/page/organism-list — a list of suppоrted organism IDs.
+</help>
+    <citations>
+        <citation type="doi">doi:10.1093/nar/gkz369</citation>
+    </citations>
+</tool>

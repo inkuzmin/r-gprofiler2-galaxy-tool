@@ -2,7 +2,7 @@
 
 # options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
 
-suppressPackageStartupMessages(library("argparse"))
+library("argparse")
 library("gprofiler2")
 library("ggplot2")
 
@@ -16,13 +16,12 @@ parser$add_argument("--input", type="character", action="append")
 parser$add_argument("--label", type="character", action="append")
 parser$add_argument("--output", type="character")
 
-# parser$add_argument("--multiquery", action='store_true')
+parser$add_argument("--organism", type="character")
+parser$add_argument("--ordered_query", action="store_true")
 
 parser$add_argument("-p", "--plot", type="character")
 
 # Advanced options
-parser$add_argument("--organism", type="character")
-parser$add_argument("--ordered_query", action="store_true")
 parser$add_argument("--significant", action="store_true")
 parser$add_argument("--exclude_iea", action="store_true")
 parser$add_argument("--measure_underrepresentation", action="store_true")
@@ -32,6 +31,8 @@ parser$add_argument("--correction_method", type="character")
 parser$add_argument("--domain_scope", type="character")
 parser$add_argument("--custom_bg", type="character")
 parser$add_argument("--numeric_ns", type="character")
+
+# Datasources
 parser$add_argument("--sources", type="character", action="append")
 
 args <- parser$parse_args()
@@ -49,29 +50,24 @@ if (length(args$sources) > 0) {
 }
 
 response <- gost(query
-	, organism = args$organism
-	, ordered_query = args$ordered_query
-	, significant = args$significant
-	, exclude_iea = args$exclude_iea
-	, measure_underrepresentation = args$measure_underrepresentation
-	, evcodes = args$evcodes
-	, user_threshold = args$user_threshold
-	, correction_method = args$correction_method
-	, domain_scope = args$domain_scope
-	, custom_bg = custom_bg
-	, numeric_ns = args$numeric_ns
-	, sources = sources
-	)
+				, organism                    = args$organism
+				, ordered_query               = args$ordered_query
+				, significant                 = args$significant
+				, exclude_iea                 = args$exclude_iea
+				, measure_underrepresentation = args$measure_underrepresentation
+				, evcodes                     = args$evcodes
+				, user_threshold              = args$user_threshold
+				, correction_method           = args$correction_method
+				, domain_scope                = args$domain_scope
+				, custom_bg                   = custom_bg
+				, numeric_ns                  = args$numeric_ns
+				, sources                     = sources
+				)
 
 output <- response$result
-
 output$parents <- vapply(output$parents, paste, collapse = ",", character(1L))
-
-output.calnames = colnames(output)
-
-write.table(output, file=args$output, quote=FALSE, sep='\t', row.names = FALSE, col.names = output.calnames)
-
-
+output.colnames = colnames(output)
+write.table(output, file=args$output, quote=FALSE, sep='\t', row.names = FALSE, col.names = output.colnames)
 
 if (args$plot != 'None') {
 	image.name <- strsplit(args$plot, "\\.")
@@ -81,4 +77,3 @@ if (args$plot != 'None') {
 	# publish_gostplot(plot, highlight_terms = NULL, filename = paste0(unlist(image.name)[1], ".png"))
 	file.rename(paste0(unlist(image.name)[1], ".png"), paste0(unlist(image.name)[1], ".dat"))
 }
-

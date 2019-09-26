@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<tool id="gprofiler2_convert" name="g:Profiler / g:Convert" version="0.1.6">
+    <description>converts between various types of namespaces</description>
+    <requirements>
+        <requirement type="package" version="3.5.3">r-base</requirement>
+        <requirement type="package" version="0.1.6">r-gprofiler2</requirement>
+        <requirement type="package" version="2.0.1">r-argparse</requirement>
+        <requirement type="package" version="1.8.4">r-plyr</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        Rscript "$__tool_directory__/gprofiler2_convert.R"
+            --input "$input"
+            --organism "$organism"
+            --target_ns "$target_ns"
+            --numeric_ns "$numeric_ns"
+            --output "$output"
+
+            #if $max
+                --max $max
+            #end if
+
+            $filter_na
+    ]]></command>
+    <inputs>
+        <param type="data" name="input" format="txt"
+            label="Input is whitespace-separated list of genes, proteins, probes, term IDs or chromosomal regions." />
+
+
+        <param type="text" name="organism" label="Organism"
+            help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs."
+            value="hsapiens">
+        </param>
+
+        <param type="text" name="target_ns" label="Target namespace"
+            optional="true"
+            help="Check the help section below for the complete list of supported namespaces."
+            value="ENSG" />
+
+        <param type="text" name="numeric_ns" label="Numeric IDs treated as"
+            optional="true"
+            help="The prefix for fully numeric IDs. Check the help section below for the complete list of supported namespaces (including numeric)."
+            value="" />
+
+        <param type="integer" name="max"
+            label="Maximum number of results per initial alias to show"
+            optional="true"
+            help="Shows all by default."
+            value="" />
+
+        <param type="boolean" name="filter_na" label="Filter N/A"
+            optional="true"
+            help="Whether to filter out results without a corresponding target."
+            checked="false"
+            truevalue="--filter_na" falsevalue="" />
+
+    </inputs>
+    <outputs>
+         <data label="${tool.name} on ${on_string}"
+            name="output" format="tabular" />
+    </outputs>
+
+    <help>
+**What it does**
+  Interface to the g:Profiler tool g:Convert that uses the information in Ensembl databases to handle hundreds of types of identifiers for genes, proteins, transcripts, microarray probesets, etc, for many species, experimental platforms and biological databases. The input is flexible: it accepts a mixed list of IDs and recognises their types automatically. It can also serve as a service to get all genes belonging to a particular functional category.
+
+----
+
+**Useful links**
+  * https://biit.cs.ut.ee/gprofiler/convert — a standalone tool with expanded  functionality.
+  * https://biit.cs.ut.ee/gprofiler/page/organism-list — a list of suppоrted organism IDs.
+  * https://biit.cs.ut.ee/gprofiler/page/namespaces-list — a list of supported namespace IDs.
+
+----
+
+**gprofiler2 R tool**
+  * https://CRAN.R-project.org/package=gprofiler2 — as CRAN package. 
+  * https://anaconda.org/conda-forge/r-gprofiler2 — as conda-forge package.
+</help>
+    <citations>
+        <citation type="doi">doi:10.1093/nar/gkz369</citation>
+    </citations>
+</tool>
