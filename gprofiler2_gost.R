@@ -20,7 +20,7 @@ parser$add_argument("--output", type="character")
 
 parser$add_argument("-p", "--plot", type="character")
 
-# Advanced
+# Advanced options
 parser$add_argument("--organism", type="character")
 parser$add_argument("--ordered_query", action="store_true")
 parser$add_argument("--significant", action="store_true")

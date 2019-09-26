@@ -9,28 +9,14 @@
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/gprofiler2_gost.R'
             --input "$inputs"
-
             --organism "$organism"
+            $ordered_query
 
-            #if $ordered_query:
-                --ordered_query
-            #end if
+            $advanced_options.significant
+            $advanced_options.measure_underrepresentation
+            $advanced_options.evcodes
 
-            #if $advanced_options.significant:
-                --significant
-            #end if
-
-            #if $data_sources.exclude_iea:
-                --exclude_iea
-            #end if
-
-            #if $advanced_options.measure_underrepresentation:
-                --measure_underrepresentation
-            #end if
-
-            #if $advanced_options.evcodes:
-                --evcodes
-            #end if
+            $data_sources.exclude_iea
             
             --user_threshold $advanced_options.user_threshold
             --correction_method "$advanced_options.correction_method"
@@ -38,17 +24,18 @@
             --custom_bg "$advanced_options.custom_bg"
             --numeric_ns "$advanced_options.numeric_ns"
             
-            --sources "${",".join(map(str, $data_sources.go_sources or []) + map(str, $data_sources.bp_sources or []) + map(str, $data_sources.reg_sources or []) + map(str, $data_sources.proto_sources or []) + map(str, $data_sources.hp_sources or []))}"
+            --sources "${",".join(sum([data_sources[source_category] for source_category in data_sources if data_sources[source_category] and len(data_sources[source_category]) > 0], []))}"
 
             --output $output
             --plot $plot
     ]]></command>
     <inputs>
 
-        <param type="data" name="inputs" format="txt" label="Input is whitespace-separated list of genes" />
+        <param type="data" name="inputs" format="txt"
+            label="Input is whitespace-separated list of genes" />
 
         <param type="text" name="organism" label="Organism"
-            optional="true"
+
             help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs."
             value="hsapiens">
         </param>
@@ -56,7 +43,7 @@
         <param type="boolean" name="ordered_query" label="Ordered query"
             optional="true"
             help="When input gene lists are ranked this option may be used to get GSEA style p-values."
-            value="false" />
+            truevalue="--ordered_query" falsevalue=""  />
 
         <section name="advanced_options" title="Advanced options" expanded="false">
 
@@ -64,19 +51,18 @@
                 optional="true"
                 help="Whether all or only statistically significant results should be returned."
                 checked="true"
-                value="true" />
+                truevalue="--significant" falsevalue="" />
 
             <param type="boolean" name="measure_underrepresentation" label="Measure underrepresentation"
                 optional="true"
-                value="false" />
+                truevalue="--measure_underrepresentation" falsevalue="" />
 
             <param type="boolean" name="evcodes" label="Evidence codes"
                 optional="true"
                 help="Include evidence codes to the results. Note that this can decrease performance
                 and make the query slower. In addition, a column ’intersection’ is created that
-                contains the gene id-s that intersect between the query and term. This parameter
-                does not work if ’multi_query’ is set to TRUE."
-                value="false" />
+                contains the gene id-s that intersect between the query and term."
+                truevalue="--evcodes" falsevalue="" />
 
             <param type="float" name="user_threshold" label="User threshold"
                 optional="true"
@@ -119,7 +105,7 @@
             <param type="boolean" name="exclude_iea" label="No electronic GO annotations"
                 optional="true"
                 help="Exclude electronic GO annotations (IEA evidence code)."
-                value="false" />
+                truevalue="--exclude_iea" falsevalue=""  />
 
             <param name="bp_sources" optional="true" type="select" label="biological pathways" multiple="true" display="checkboxes">
                 <option selected="true" value="KEGG">KEGG</option>
