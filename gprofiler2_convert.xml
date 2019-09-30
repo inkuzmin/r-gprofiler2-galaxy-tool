@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
-<tool id="gprofiler2_convert" name="g:Profiler / g:Convert" version="0.1.6">
+<tool id="gprofiler2_convert" name="g:Profiler / g:Convert" version="@VERSION@">
     <description>converts between various types of namespaces</description>
-    <requirements>
-        <requirement type="package" version="3.5.3">r-base</requirement>
-        <requirement type="package" version="0.1.6">r-gprofiler2</requirement>
-        <requirement type="package" version="2.0.1">r-argparse</requirement>
-        <requirement type="package" version="1.8.4">r-plyr</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements"></expand>
+    <expand macro="stdio" />
     <command detect_errors="exit_code"><![CDATA[
         Rscript "$__tool_directory__/gprofiler2_convert.R"
             --input "$input"
@@ -65,18 +64,8 @@
 
 ----
 
-**Useful links**
-  * https://biit.cs.ut.ee/gprofiler/convert — a standalone tool with expanded  functionality.
-  * https://biit.cs.ut.ee/gprofiler/page/organism-list — a list of suppоrted organism IDs.
-  * https://biit.cs.ut.ee/gprofiler/page/namespaces-list — a list of supported namespace IDs.
+@REFERENCES@
 
-----
-
-**gprofiler2 R tool**
-  * https://CRAN.R-project.org/package=gprofiler2 — as CRAN package. 
-  * https://anaconda.org/conda-forge/r-gprofiler2 — as conda-forge package.
-</help>
-    <citations>
-        <citation type="doi">doi:10.1093/nar/gkz369</citation>
-    </citations>
+    </help>
+    <expand macro="citations" />
 </tool>

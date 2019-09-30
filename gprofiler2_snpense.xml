@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
-<tool id="gprofiler2_snpense" name="g:Profiler / g:SNPense" version="0.1.6">
+<tool id="gprofiler2_snpense" name="g:Profiler / g:SNPense" version="@VERSION@">
     <description>maps SNP rs-codes to gene names, chromosomal coordinates and variant effects</description>
-    <requirements>
-        <requirement type="package" version="3.5.3">r-base</requirement>
-        <requirement type="package" version="0.1.6">r-gprofiler2</requirement>
-        <requirement type="package" version="2.0.1">r-argparse</requirement>
-        <requirement type="package" version="1.8.4">r-plyr</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements"></expand>
+    <expand macro="stdio" />
     <command detect_errors="exit_code"><![CDATA[
         Rscript "$__tool_directory__/gprofiler2_snpense.R"
             --input "$input"
@@ -35,16 +34,7 @@
 
 ----
 
-**Useful links**
-  * https://biit.cs.ut.ee/gprofiler/snpense — a standalone tool with expanded  functionality.
-
-----
-
-**gprofiler2 R tool**
-  * https://CRAN.R-project.org/package=gprofiler2 — as CRAN package. 
-  * https://anaconda.org/conda-forge/r-gprofiler2 — as conda-forge package.
-</help>
-    <citations>
-        <citation type="doi">doi:10.1093/nar/gkz369</citation>
-    </citations>
+@REFERENCES@
+    </help>
+    <expand macro="citations"></expand>
 </tool>

@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
-<tool id="gprofiler2_random" name="g:Profiler / random" version="0.1.6">
+<tool id="gprofiler2_random" name="g:Profiler / random" version="@VERSION@">
     <description>generates a gene list</description>
-    <requirements>
-        <requirement type="package" version="3.5.3">r-base</requirement>
-        <requirement type="package" version="1.95_4.12">r-rcurl</requirement>
-        <requirement type="package" version="2.0.1">r-argparse</requirement>
-        <requirement type="package" version="1.6">r-jsonlite</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="stdio" />
     <command detect_errors="exit_code"><![CDATA[
         Rscript "$__tool_directory__/gprofiler2_random.R"
             --output "$output" --organism "$organism"
@@ -24,15 +22,11 @@
 
     <help>
 **What it does**
-  This tool wraps performs a request to g:Profiler API to generate pseudorandom...
+  This tool performs a request to g:Profiler API to fetch a set of pseudorandom gene IDs. Gene IDs selected in a way that g:GOSt output with high probability will contain a small number of results with low enough p-values to be considered as significant.
 
 ----
 
-**Useful links**
-  * https://biit.cs.ut.ee/gprofiler/ — a standalone tool with expanded exploratory functionality.
-  * https://biit.cs.ut.ee/gprofiler/page/organism-list — a list of suppоrted organism IDs.
-</help>
-    <citations>
-        <citation type="doi">doi:10.1093/nar/gkz369</citation>
-    </citations>
+@REFERENCES@
+    </help>
+    <expand macro="citations"></expand>
 </tool>

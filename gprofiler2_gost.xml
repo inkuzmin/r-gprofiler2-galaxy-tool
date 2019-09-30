@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<tool id="gprofiler2_gost" name="g:Profiler / g:GOSt" version="0.1.6">
+<tool id="gprofiler2_gost" name="g:Profiler / g:GOSt" version="@VERSION@">
     <description>performs functional enrichment analysis of gene lists</description>
-    <requirements>
-        <requirement type="package" version="3.5.3">r-base</requirement>
-        <requirement type="package" version="0.1.6">r-gprofiler2</requirement>
-        <requirement type="package" version="2.0.1">r-argparse</requirement>
-    </requirements>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <expand macro="requirements"></expand>
+    <expand macro="stdio" />
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/gprofiler2_gost.R'
             --input "$inputs"
@@ -30,7 +30,6 @@
             --plot "$plot"
     ]]></command>
     <inputs>
-
         <param type="data" name="inputs" format="txt"
             label="Input is whitespace-separated list of genes" />
 
@@ -45,7 +44,6 @@
             truevalue="--ordered_query" falsevalue=""  />
 
         <section name="advanced_options" title="Advanced options" expanded="false">
-
             <param type="boolean" name="significant" label="Significant only"
                 optional="true"
                 help="Whether all or only statistically significant results should be returned."
@@ -98,7 +96,6 @@
         </section>
 
         <section name="data_sources" title="Data sources" expanded="false">
-
             <param name="go_sources" optional="true" type="select" label="Gene Ontology" multiple="true" display="checkboxes">
                 <option selected="true" value="BP">GO biological process</option>
                 <option selected="true" value="MF">GO molecular function</option>
@@ -141,7 +138,6 @@
                     value="false" />
             </conditional>
         </section>
-
     </inputs>
     <outputs>
          <data label="${tool.name} on ${on_string}"
@@ -159,21 +155,10 @@
 
 ----
 
-**Useful links**
-  * https://biit.cs.ut.ee/gprofiler/gost — a standalone tool with expanded functionality.
-  * https://biit.cs.ut.ee/gprofiler/page/organism-list — a list of suppоrted organism IDs.
-  * https://biit.cs.ut.ee/gprofiler/page/namespaces-list — a list of supported namespace IDs.
+@REFERENCES@
 
-----
-
-**gprofiler2 R tool**
-  * https://CRAN.R-project.org/package=gprofiler2 — as CRAN package. 
-  * https://anaconda.org/conda-forge/r-gprofiler2 — as conda-forge package.
-
-</help>
-    <citations>
-        <citation type="doi">doi:10.1093/nar/gkz369</citation>
-    </citations>
+    </help>
+    <expand macro="citations"></expand>
     <edam_topics>
         <edam_topic>topic_0091</edam_topic>
     </edam_topics>
