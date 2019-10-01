@@ -23,6 +23,9 @@ parser$add_argument("--numeric_ns", type="character")
 parser$add_argument("--max", type="integer")
 parser$add_argument("--filter_na", action="store_true")
 
+# Tool settings
+parser$add_argument("--base_url", type="character")
+
 args <- parser$parse_args()
 
 query <- scan(args$input, character(), quote = "")
@@ -32,6 +35,10 @@ if (is.null(args$max)) {
 	mthreshold = Inf
 } else {
 	mthreshold <- args$max
+}
+
+if (args$base_url != 'None') {
+	set_base_url(args$base_url)
 }
 
 response <- gconvert(query

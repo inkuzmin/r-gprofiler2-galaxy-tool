@@ -11,6 +11,7 @@
             --input "$input"
             $filter_na
             --output "$output"
+            --base_url "$tool_settings.base_url"
     ]]></command>
     <inputs>
         <param type="data" name="input" format="txt"
@@ -22,11 +23,19 @@
             checked="false"
             truevalue="--filter_na" falsevalue="" />
 
+        <expand macro="tool_settings"></expand>
     </inputs>
     <outputs>
          <data label="${tool.name} on ${on_string}"
             name="output" format="tabular" />
     </outputs>
+    <tests>
+        <test>
+            <param name="input" value="example_snpense_query.txt" ftype="txt" />
+            <param name="base_url" value="http://biit.cs.ut.ee/gprofiler_archive3/e94_eg41_p11" />
+            <output name="output" file="example_snpense_results.txt" ftype="tabular" />
+        </test>
+    </tests>
 
     <help>
 **What it does**

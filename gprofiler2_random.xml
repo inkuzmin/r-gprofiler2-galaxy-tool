@@ -19,6 +19,15 @@
          <data label="${tool.name}"
             name="output" format="tabular" />
     </outputs>
+    <tests>
+        <test>
+            <output name="output">
+                <assert_contents>
+                    <has_n_columns n="1" />
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
 
     <help>
 **What it does**

@@ -17,9 +17,16 @@ parser$add_argument("--input", type="character")
 parser$add_argument("--output", type="character")
 parser$add_argument("--filter_na", action="store_true")
 
+# Tool settings
+parser$add_argument("--base_url", type="character")
+
 args <- parser$parse_args()
 
 query <- scan(args$input, character(), quote = "")
+
+if (args$base_url != 'None') {
+	set_base_url(args$base_url)
+}
 
 response <- gsnpense(query
 					, filter_na  = args$filter_na

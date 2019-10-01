@@ -13,8 +13,7 @@ set_user_agent(paste0(get_user_agent(), " galaxy"))
 
 parser <- ArgumentParser()
 
-parser$add_argument("--input", type="character", action="append")
-parser$add_argument("--label", type="character", action="append")
+parser$add_argument("--input", type="character")
 parser$add_argument("--output", type="character")
 
 parser$add_argument("--organism", type="character")
@@ -36,6 +35,9 @@ parser$add_argument("--numeric_ns", type="character")
 # Datasources
 parser$add_argument("--sources", type="character", action="append")
 
+# Tool settings
+parser$add_argument("--base_url", type="character")
+
 args <- parser$parse_args()
 
 query <- scan(args$input, character(), quote = "")
@@ -46,8 +48,13 @@ if (args$custom_bg != 'None') {
 	custom_bg = NULL
 }
 
+if (args$base_url != 'None') {
+	set_base_url(args$base_url)
+}
+
+
 if (length(args$sources) > 0) {
-	sources <- unlist(strsplit(args$sources, ","))
+	sources <- unlist(args$sources)
 }
 
 response <- gost(query

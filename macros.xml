@@ -45,6 +45,18 @@ This tool is part of the `g:Profiler`_ from the `University of Tartu`_.
 
 ]]>
     </token>
+
+	<xml name="tool_settings">
+		<section name="tool_settings" title="Tool settings" expanded="false">
+        	<param type="text" name="base_url" label="Base URL"
+                optional="true"
+                help="Useful for overriding the default URL (http://biit.cs.ut.ee/gprofiler) with the beta (https://biit.cs.ut.ee/gprofiler_beta) or a compatible archived version (available starting from the version e94_eg41_p11, e.g. https://biit.cs.ut.ee/gprofiler_archive3/e94_eg41_p11)."
+                value="http://biit.cs.ut.ee/gprofiler">
+        	</param>
+        	<yield />
+        </section>
+    </xml>
+
     <xml name="citations">
         <citations>
             <citation type="doi">doi:10.1093/nar/gkz369</citation>

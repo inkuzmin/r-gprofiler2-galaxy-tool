@@ -20,6 +20,7 @@
             #end if
 
             $filter_na
+            --base_url "$tool_settings.base_url"
     ]]></command>
     <inputs>
         <param type="data" name="input" format="txt"
@@ -52,11 +53,20 @@
             help="Whether to filter out results without a corresponding target name."
             checked="false"
             truevalue="--filter_na" falsevalue="" />
+
+        <expand macro="tool_settings"></expand>
     </inputs>
     <outputs>
          <data label="${tool.name} on ${on_string}"
             name="output" format="tabular" />
     </outputs>
+    <tests>
+        <test>
+            <param name="input" value="example_query.txt" ftype="txt" />
+            <param name="base_url" value="http://biit.cs.ut.ee/gprofiler_archive3/e94_eg41_p11" />
+            <output name="output" file="example_orth_results.txt" ftype="tabular" />
+        </test>
+    </tests>
 
     <help>
 **What it does**

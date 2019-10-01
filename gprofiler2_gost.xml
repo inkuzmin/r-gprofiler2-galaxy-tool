@@ -8,7 +8,7 @@
     <expand macro="stdio" />
     <command detect_errors="exit_code"><![CDATA[
         Rscript '$__tool_directory__/gprofiler2_gost.R'
-            --input "$inputs"
+            --input "$input"
             --organism "$organism"
             $ordered_query
 
@@ -23,14 +23,41 @@
             --domain_scope "$advanced_options.domain_scope"
             --custom_bg "$advanced_options.custom_bg"
             --numeric_ns "$advanced_options.numeric_ns"
-            
-            --sources "${",".join(map(str, sum([list($data_sources[source_category] or []) for source_category in $data_sources], [])))}"
+
+            #if $data_sources.go_sources
+                #for $source in $data_sources.go_sources
+                    --sources $source
+                #end for
+            #end if
+
+            #if $data_sources.bp_sources
+                #for $source in $data_sources.bp_sources
+                    --sources $source
+                #end for
+            #end if
+
+            #if $data_sources.reg_sources
+                #for $source in $data_sources.reg_sources
+                    --sources $source
+                #end for
+            #end if
+
+            #if $data_sources.proto_sources
+                #for $source in $data_sources.proto_sources
+                    --sources $source
+                #end for
+            #end if
+
+            #if $data_sources.hp_sources
+                --sources $data_sources.hp_sources
+            #end if
 
             --output "$output"
             --plot "$plot"
+            --base_url "$tool_settings.base_url"
     ]]></command>
     <inputs>
-        <param type="data" name="inputs" format="txt"
+        <param type="data" name="input" format="txt"
             label="Input is whitespace-separated list of genes" />
 
         <param type="text" name="organism" label="Organism"
@@ -92,7 +119,6 @@
                 optional="true"
                 help="The prefix for fully numeric IDs. Check the help section below for the complete list of supported namespaces."
                 value="" />
-
         </section>
 
         <section name="data_sources" title="Data sources" expanded="false">
@@ -123,7 +149,7 @@
 
             <param name="proto_sources" optional="true" type="select" label="protein databases" multiple="true" display="checkboxes">
                 <option selected="true" value="HPA">Human Protein Atlas</option>
-                <option selected="true" value="MIRNA">CORUM</option>
+                <option selected="true" value="CORUM">CORUM</option>
             </param>
 
             <param name="hp_sources" optional="true" type="select" label="Human phenotype ontology" multiple="true" display="checkboxes">
@@ -131,23 +157,29 @@
             </param>
         </section>
 
-        <section name="advanced_exporting" title="Advanced exporting options" expanded="false">
-            <conditional name="plot_options">
-                <param type="boolean" name="export_plot" label="Export image"
-                    help="A publication ready image will be created alongside the tabular output. The plot is very similar to the one shown in the g:GOSt web tool."
-                    value="false" />
-            </conditional>
-        </section>
-    </inputs>
+        <expand macro="tool_settings">
+            <param type="boolean" name="export_plot" label="Export image"
+                optional="true"
+                help="A publication ready image will be created alongside the tabular output. The plot is very similar to the one shown in the g:GOSt web tool."
+                value="false" />
+        </expand>
+        </inputs>
     <outputs>
          <data label="${tool.name} on ${on_string}"
             name="output" format="tabular" />
 
          <data label="${tool.name} on ${on_string} (plot)"
             name="plot" format="png">
-            <filter>advanced_exporting['plot_options']['export_plot']</filter>
+            <filter>tool_settings['export_plot']</filter>
         </data>
     </outputs>
+     <tests>
+        <test>
+            <param name="input" value="example_query.txt" ftype="txt" />
+            <param name="base_url" value="http://biit.cs.ut.ee/gprofiler_archive3/e94_eg41_p11" />
+            <output name="output" file="example_gost_results.txt" ftype="tabular" />
+        </test>
+    </tests>
 
     <help>
 **What it does**
