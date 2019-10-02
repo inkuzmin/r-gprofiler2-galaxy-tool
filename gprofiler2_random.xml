@@ -10,14 +10,13 @@
             --output "$output" --organism "$organism"
     ]]></command>
     <inputs>
-        <param type="text" name="organism" label="Organism"
-            help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs."
-            value="hsapiens">
+        <param name="organism" type="text" value="hsapiens"
+            label="Organism"
+            help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs.">
         </param>
     </inputs>
     <outputs>
-         <data label="${tool.name}"
-            name="output" format="tabular" />
+         <data name="output" format="tabular" label="${tool.name}"/>
     </outputs>
     <tests>
         <test>

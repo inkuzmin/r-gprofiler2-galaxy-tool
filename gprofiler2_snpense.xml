@@ -14,26 +14,24 @@
             --base_url "$tool_settings.base_url"
     ]]></command>
     <inputs>
-        <param type="data" name="input" format="txt"
+        <param name="input" type="data" format="txt"
             label="Input is whitespace-separated list of SNP IDs to be translated (should start with prefix ’rs’)." />
 
-        <param type="boolean" name="filter_na" label="Filter N/A"
-            optional="true"
-            help="Whether to filter out results without a corresponding target name."
-            checked="false"
-            truevalue="--filter_na" falsevalue="" />
+        <param name="filter_na" type="boolean" checked="false" truevalue="--filter_na" falsevalue="" optional="true"
+            label="Filter N/A"
+            help="Whether to filter out results without a corresponding target name."/>
 
         <expand macro="tool_settings"></expand>
     </inputs>
     <outputs>
-         <data label="${tool.name} on ${on_string}"
-            name="output" format="tabular" />
+         <data name="output" format="tabular"
+            label="${tool.name} on ${on_string}" />
     </outputs>
     <tests>
         <test>
-            <param name="input" value="example_snpense_query.txt" ftype="txt" />
+            <param name="input" ftype="txt" value="example_snpense_query.txt" />
             <param name="base_url" value="http://biit.cs.ut.ee/gprofiler_archive3/e94_eg41_p11" />
-            <output name="output" file="example_snpense_results.txt" ftype="tabular" />
+            <output name="output" ftype="tabular" file="example_snpense_results.txt" />
         </test>
     </tests>
 

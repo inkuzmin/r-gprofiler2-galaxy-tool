@@ -23,36 +23,31 @@
             --base_url "$tool_settings.base_url"
     ]]></command>
     <inputs>
-        <param type="data" name="input" format="txt"
+        <param name="input" type="data" format="txt"
             label="Input is whitespace-separated list of genes, proteins, probes, term IDs or chromosomal regions." />
 
 
-        <param type="text" name="source_organism" label="Source organism"
-            help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs."
-            value="hsapiens">
+        <param name="source_organism" type="text" value="hsapiens"
+            label="Source organism"
+            help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs.">
         </param>
 
-        <param type="text" name="target_organism" label="Target organism"
-            help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs."
-            value="mmusculus">
+        <param name="target_organism" type="text" value="mmusculus"
+            label="Target organism"
+            help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs.">
         </param>
 
-        <param type="text" name="numeric_ns" label="Numeric IDs treated as"
-            optional="true"
-            help="The prefix for fully numeric IDs. Check the help section below for the complete list of supported namespaces (including numeric)."
-            value="" />
+        <param name="numeric_ns" type="text" value="" optional="true"
+            label="Numeric IDs treated as"
+            help="The prefix for fully numeric IDs. Check the help section below for the complete list of supported namespaces (including numeric)."/>
 
-        <param type="integer" name="max"
+        <param name="max" type="integer" value="" optional="true"
             label="Maximum number of ortholog names per gene to show"
-            optional="true"
-            help="Shows all by default."
-            value="" />
+            help="Shows all by default."/>
 
-        <param type="boolean" name="filter_na" label="Filter N/A"
-            optional="true"
-            help="Whether to filter out results without a corresponding target name."
-            checked="false"
-            truevalue="--filter_na" falsevalue="" />
+        <param name="filter_na" type="boolean" checked="false" truevalue="--filter_na" falsevalue="" optional="true"
+            label="Filter N/A"
+            help="Whether to filter out results without a corresponding target name."/>
 
         <expand macro="tool_settings"></expand>
     </inputs>
@@ -62,9 +57,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="input" value="example_query.txt" ftype="txt" />
+            <param name="input" ftype="txt" value="example_query.txt"/>
             <param name="base_url" value="http://biit.cs.ut.ee/gprofiler_archive3/e94_eg41_p11" />
-            <output name="output" file="example_orth_results.txt" ftype="tabular" />
+            <output name="output" ftype="tabular" file="example_orth_results.txt" />
         </test>
     </tests>
 

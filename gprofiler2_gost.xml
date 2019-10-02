@@ -4,6 +4,12 @@
     <macros>
         <import>macros.xml</import>
     </macros>
+    <edam_topics>
+        <edam_topic>topic_0091</edam_topic>
+    </edam_topics>
+    <edam_operations>
+        <edam_operation>operation_2436</edam_operation>
+    </edam_operations>
     <expand macro="requirements"></expand>
     <expand macro="stdio" />
     <command detect_errors="exit_code"><![CDATA[
@@ -57,127 +63,115 @@
             --base_url "$tool_settings.base_url"
     ]]></command>
     <inputs>
-        <param type="data" name="input" format="txt"
+        <param name="input" type="data" format="txt"
             label="Input is whitespace-separated list of genes" />
 
-        <param type="text" name="organism" label="Organism"
-            help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs."
-            value="hsapiens">
+        <param name="organism" type="text" value="hsapiens"
+            label="Organism"
+            help="Organism IDs are constructed by concatenating the first letter of the generic name and the specific name. Examples: human — Homo sapiens — 'hsapiens', mouse — Mus musculus — 'mmusculus', thale cress — Arabidopsis thaliana — 'athaliana'. Check the help section below for the complete list of supported organism IDs.">
         </param>
         
-        <param type="boolean" name="ordered_query" label="Ordered query"
-            optional="true"
-            help="When input gene lists are ranked this option may be used to get GSEA style p-values."
-            truevalue="--ordered_query" falsevalue=""  />
+        <param name="ordered_query" type="boolean" truevalue="--ordered_query" falsevalue="" optional="true"
+            label="Ordered query"
+            help="When input gene lists are ranked this option may be used to get GSEA style p-values."/>
 
         <section name="advanced_options" title="Advanced options" expanded="false">
-            <param type="boolean" name="significant" label="Significant only"
-                optional="true"
-                help="Whether all or only statistically significant results should be returned."
-                checked="true"
-                truevalue="--significant" falsevalue="" />
+            <param name="significant" type="boolean" checked="true" truevalue="--significant" falsevalue="" optional="true"
+                label="Significant only"
+                help="Whether all or only statistically significant results should be returned."/>
 
-            <param type="boolean" name="measure_underrepresentation"
-                label="Measure underrepresentation"
-                optional="true"
-                truevalue="--measure_underrepresentation" falsevalue="" />
+            <param name="measure_underrepresentation" type="boolean" truevalue="--measure_underrepresentation" falsevalue="" optional="true"
+                label="Measure underrepresentation"/>
 
-            <param type="boolean" name="evcodes" label="Evidence codes"
-                optional="true"
+            <param name="evcodes" type="boolean" truevalue="--evcodes" falsevalue="" optional="true"
+                label="Evidence codes"
                 help="Include evidence codes to the results. Note that this can decrease performance
                 and make the query slower. In addition, a column ’intersection’ is created that
-                contains the gene id-s that intersect between the query and term."
-                truevalue="--evcodes" falsevalue="" />
+                contains the gene id-s that intersect between the query and term."/>
 
-            <param type="float" name="user_threshold" label="User threshold"
-                optional="true"
-                help="Custom p-value threshold, results with a larger p-value are excluded."
-                value="0.05" />
+            <param name="user_threshold" type="float" value="0.05" optional="true"
+                label="User threshold"
+                help="Custom p-value threshold, results with a larger p-value are excluded."/>
 
-            <param name="correction_method" type="select" label="Significane threshold"
-                multiple="false"
-                optional="true"
-                help="The algorithm used for multiple testing correction">
+            <param name="correction_method" type="select" multiple="false" optional="true"
+                label="Significane threshold"
+                help="The algorithm used for multiple testing correction.">
                 <option selected="true" value="gSCS">g:SCS threshold</option>
                 <option value="bonferroni">Bonferroni correction</option>
                 <option value="fdr">Benjamini-Hochberg FDR</option>
             </param>
 
-            <param name="domain_scope" type="select" label="Statistical domain scope"
-                multiple="false"
-                optional="true"
+            <param name="domain_scope" type="select" multiple="false" optional="true"
+                label="Statistical domain scope"
                 help="Effective genomic landscape for statistical testing.">
                 <option selected="true" value="annotated">Only annotated genes</option>
                 <option value="known">All known genes</option>
                 <option value="custom">Custom</option>
             </param>
 
-            <param type="data" optional="true" name="custom_bg" format="tabular"
+            <param name="custom_bg" type="data" format="tabular" optional="true"
                 label="Custom background" />
 
-            <param type="text" name="numeric_ns" label="Numeric IDs treated as"
-                optional="true"
-                help="The prefix for fully numeric IDs. Check the help section below for the complete list of supported namespaces."
-                value="" />
+            <param name="numeric_ns" type="text" value="" optional="true"
+                label="Numeric IDs treated as"
+                help="The prefix for fully numeric IDs. Check the help section below for the complete list of supported namespaces."/>
         </section>
 
         <section name="data_sources" title="Data sources" expanded="false">
-            <param name="go_sources" optional="true" type="select" label="Gene Ontology" multiple="true" display="checkboxes">
+            <param name="go_sources" type="select" multiple="true" display="checkboxes" optional="true"
+                label="Gene Ontology">
                 <option selected="true" value="BP">GO biological process</option>
                 <option selected="true" value="MF">GO molecular function</option>
                 <option selected="true" value="CC">GO biological process</option>
             </param>
 
-            <param type="boolean" name="exclude_iea" label="No electronic GO annotations"
-                optional="true"
-                help="Exclude electronic GO annotations (IEA evidence code)."
-                truevalue="--exclude_iea" falsevalue=""  />
+            <param name="exclude_iea" type="boolean" truevalue="--exclude_iea" falsevalue="" optional="true"
+                label="No electronic GO annotations"
+                help="Exclude electronic GO annotations (IEA evidence code)."/>
 
-            <param name="bp_sources" optional="true" type="select"
-                label="biological pathways"
-                multiple="true"
-                display="checkboxes">
+            <param name="bp_sources" type="select" multiple="true" display="checkboxes" optional="true"
+                label="biological pathways">
                 <option selected="true" value="KEGG">KEGG</option>
                 <option selected="true" value="REAC">Reactome</option>
                 <option selected="true" value="WP">WikiPathways</option>
             </param>
 
-            <param name="reg_sources" optional="true" type="select" label="regulatory motifs in DNA" multiple="true" display="checkboxes">
+            <param name="reg_sources" type="select" multiple="true" display="checkboxes" optional="true"
+                label="regulatory motifs in DNA">
                 <option selected="true" value="TF">TRANSFAC</option>
                 <option selected="true" value="MIRNA">miRTarBase</option>
             </param>
 
-            <param name="proto_sources" optional="true" type="select" label="protein databases" multiple="true" display="checkboxes">
+            <param name="proto_sources" type="select" multiple="true" display="checkboxes" optional="true"
+                label="protein databases">
                 <option selected="true" value="HPA">Human Protein Atlas</option>
                 <option selected="true" value="CORUM">CORUM</option>
             </param>
 
-            <param name="hp_sources" optional="true" type="select" label="Human phenotype ontology" multiple="true" display="checkboxes">
+            <param name="hp_sources" type="select" multiple="true" display="checkboxes" optional="true"
+                label="Human phenotype ontology">
                 <option selected="true" value="HP">HP</option>
             </param>
         </section>
 
         <expand macro="tool_settings">
-            <param type="boolean" name="export_plot" label="Export image"
-                optional="true"
-                help="A publication ready image will be created alongside the tabular output. The plot is very similar to the one shown in the g:GOSt web tool."
-                value="false" />
+            <param name="export_plot" type="boolean" value="false" optional="true"
+                label="Export image"
+                help="A publication ready image will be created alongside the tabular output. The plot is very similar to the one shown in the g:GOSt web tool."/>
         </expand>
         </inputs>
     <outputs>
-         <data label="${tool.name} on ${on_string}"
-            name="output" format="tabular" />
+         <data name="output" format="tabular" label="${tool.name} on ${on_string}"/>
 
-         <data label="${tool.name} on ${on_string} (plot)"
-            name="plot" format="png">
+         <data name="plot" format="png" label="${tool.name} on ${on_string} (plot)">
             <filter>tool_settings['export_plot']</filter>
         </data>
     </outputs>
      <tests>
         <test>
-            <param name="input" value="example_query.txt" ftype="txt" />
+            <param name="input" ftype="txt" value="example_query.txt" />
             <param name="base_url" value="http://biit.cs.ut.ee/gprofiler_archive3/e94_eg41_p11" />
-            <output name="output" file="example_gost_results.txt" ftype="tabular" />
+            <output name="output" ftype="tabular" file="example_gost_results.txt" />
         </test>
     </tests>
 
@@ -191,10 +185,4 @@
 
     </help>
     <expand macro="citations"></expand>
-    <edam_topics>
-        <edam_topic>topic_0091</edam_topic>
-    </edam_topics>
-    <edam_operations>
-        <edam_operation>operation_2436</edam_operation>
-    </edam_operations>
 </tool>
