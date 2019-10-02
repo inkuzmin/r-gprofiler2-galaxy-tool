@@ -1,0 +1,16 @@
+homepage_url: https://biit.cs.ut.ee/gprofiler
+owner: inkuzmin
+remote_repository_url: https://github.com/inkuzmin/r-gprofiler2-galaxy-tool/tree/master/gprofiler2
+categories:
+  - Statistics
+  - Web Services
+auto_tool_repositories:
+  name_template: "{{ tool_id }}"
+  description_template: "Wrapper for the g:Profiler application {{ tool_name }}. {{ tool_name }} {{ tool_description }}"
+suite:
+  name: "suite_gprofiler2"
+  description: "g:Profiler toolset: g:GOSt, g:Convert, g:Orth, g:SNPense"
+long_description: |
+  g:Profiler is a toolset for finding biological categories enriched in gene lists (g:GOSt),
+  conversions between gene identifiers (g:Convert), mappings to their orthologs (g:Orth)
+  and mappings SNP rs-codes to gene names, chromosomal coordinates and variant effects (g:SNPense).
