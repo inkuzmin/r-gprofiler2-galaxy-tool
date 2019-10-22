@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<repositories description="g:Profiler toolset: g:GOSt, g:Convert, g:Orth, g:SNPense">
-    <repository name="gprofiler2_convert" owner="inkuzmin"/>
-    <repository name="gprofiler2_orth" owner="inkuzmin"/>
-    <repository name="gprofiler2_gost" owner="inkuzmin"/>
-    <repository name="gprofiler2_snpense" owner="inkuzmin"/>
-    <repository name="gprofiler2_random" owner="inkuzmin"/>
-</repositories>
