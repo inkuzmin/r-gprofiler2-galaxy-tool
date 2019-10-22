@@ -14,6 +14,8 @@ The recommended installation is by means of the toolshed_.
 History
 =======
 
+* v0.1.6+galaxy2 - remove r-base from requirements, fixes for Linux
+* v0.1.6+galaxy1 - add r-base to requirements
 * v0.1.6+galaxy0 - initial release
 
 
