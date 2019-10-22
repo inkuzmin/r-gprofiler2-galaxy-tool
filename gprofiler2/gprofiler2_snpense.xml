@@ -7,7 +7,7 @@
     <expand macro="requirements"></expand>
     <expand macro="stdio" />
     <command detect_errors="exit_code"><![CDATA[
-        Rscript "$__tool_directory__/gprofiler2_snpense.R"
+        Rscript "$__tool_directory__/gprofiler2_snpense.r"
             --input "$input"
             $filter_na
             --output "$output"

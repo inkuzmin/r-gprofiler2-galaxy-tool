@@ -6,7 +6,7 @@
     </macros>
     <expand macro="stdio" />
     <command detect_errors="exit_code"><![CDATA[
-        Rscript "$__tool_directory__/gprofiler2_random.R"
+        Rscript "$__tool_directory__/gprofiler2_random.r"
             --output "$output" --organism "$organism"
     ]]></command>
     <inputs>

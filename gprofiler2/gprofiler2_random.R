@@ -1,12 +1,13 @@
-## Setup R error handling to go to stderr
-options(show.error.messages=F, error=function(){cat(geterrmessage(),file=stderr());q("no",1,F)})
+options( show.error.messages=F, error = function () { cat( geterrmessage(), file=stderr() ); q( "no", 1, F ) } )
 loc <- Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
 
-## Import libraries
+suppressPackageStartupMessages({
+  library("argparse")
+  library("RCurl")
+  library("jsonlite")
+})
 
-library("argparse")
-library("RCurl")
-library("jsonlite")
+sessionInfo()
 
 rcurl_opts =
   RCurl::curlOptions(useragent = "gprofiler2/0.1.6 galaxy", sslversion = 6L)

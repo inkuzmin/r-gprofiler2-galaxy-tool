@@ -2,7 +2,7 @@
 <macros>
 	<xml name="requirements">
         <requirements>
-            <requirement type="package" version="0.1.6">r-gprofiler2</requirement>
+            <requirement type="package" version="@TOOL_VERSION@">r-gprofiler2</requirement>
             <requirement type="package" version="2.0.1">r-argparse</requirement>
 			<requirement type="package" version="1.8.4">r-plyr</requirement>
             <yield/>
@@ -11,7 +11,7 @@
     
     <token name="@TOOL_VERSION@">0.1.6</token>
     
-    <token name="@VERSION@">@TOOL_VERSION@+galaxy0</token>
+    <token name="@VERSION@">@TOOL_VERSION@+galaxy2</token>
     
     <xml name="stdio">
         <stdio>
@@ -23,7 +23,7 @@
             <regex match="Exception:" />
         </stdio>
         <version_command>
-        	RScript -e 'library(gprofiler2); packageVersion("gprofiler2")' | sed 's/\[1\] //' | sed 's/.//;s/.$//'
+        	Rscript -e 'library(gprofiler2); packageVersion("gprofiler2")' | sed 's/\[1\] //' | sed 's/.//;s/.$//'
         </version_command>
     </xml>
 
