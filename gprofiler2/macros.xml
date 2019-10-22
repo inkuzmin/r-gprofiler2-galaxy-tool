@@ -12,7 +12,7 @@
     
     <token name="@TOOL_VERSION@">0.1.6</token>
     
-    <token name="@VERSION@">@TOOL_VERSION@+galaxy2</token>
+    <token name="@VERSION@">@TOOL_VERSION@+galaxy3</token>
     
     <xml name="stdio">
         <stdio>
